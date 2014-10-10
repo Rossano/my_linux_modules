@@ -329,5 +329,6 @@ static int scull_exit(void)
   return 0;
 }
 
-init_module(scull_init_module);
-exit_module(scull_exit);
+module_init(scull_init_module);
+module_exit(scull_cleanup_module);
+//module_exit(scull_exit);

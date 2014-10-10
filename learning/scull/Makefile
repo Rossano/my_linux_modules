@@ -4,7 +4,9 @@ ifeq ($(ARCH),arm)
 	CWD := ../../scull # `pwd`
 	CCPREFIX := ~/projects/raspberry/tools/arm-bcm2708/arm-bcm2708-linux-gnueabi/bin/arm-bcm2708-linux-gnueabi-
 else
-	KDIR := /lib/modules/`uname -r`/build
+	#KDIR := /lib/modules/`uname -r`/build
+	# Linux Mint CRE1-L10487
+	KDIR := ~/linux-3.13.0
 	CWD := `pwd`
 endif
 
@@ -20,3 +22,6 @@ endif
 
 clean:
 	make -C ${KDIR} M=$(CWD) clean
+	
+test:
+	gcc -o test test.c

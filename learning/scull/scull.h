@@ -2,13 +2,16 @@
  *    scull.h
 */
 
+#ifndef __SCULL_H__
+#define __SCULL_H__
+
 #include <linux/ioctl.h>
 
-#define    QUANTUM_SIZE        4000
+#define QUANTUM_SIZE	4000
 //#define ARRAY_SIZE       
-#define NUM_DEVICES        4
-#define SCULL_QSET        1000
-#define SCULL_MAJOR        0
+#define NUM_DEVICES		4
+#define SCULL_QSET		1000
+#define SCULL_MAJOR		0
 
 /*
  * Data structures
@@ -57,3 +60,5 @@ struct file_operations scull_fops = {
 //  .flush = scull_flush,
 //  .fsync = scull_fsync
 };
+
+#endif
