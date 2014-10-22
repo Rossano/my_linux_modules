@@ -12,7 +12,7 @@
 
 #define BUFFER_LEN	100
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 	assert(argc > 1);
 	char buf[BUFFER_LEN];
@@ -21,10 +21,20 @@ int main(int argc, char **argv)
 	memset(buf, 0, BUFFER_LEN);
 	printf("input: %s\n", argv[1]);
 
-	int fp = open("/dev/myCdev", 0, O_RDWR);
+	int fp = open("/dev/myCdev", O_RDWR);
+	if (fp < 0)
+	{
+		printf("Error opening /dev/myCdev\n");
+		return -1;
+	}
+
+	printf("Input string arg[1]: %s\n", argv[1]);
 	write(fp, argv[1], strlen(argv[1]));
-	while (read(fp, &buf[i++], 1)) ;
-	printf("Reversed by the driver: %s", buf);
+	read(fp, &buf, strlen(argv[1]));
+	//while (read(fp, &buf[i++], 1)) ;
+	printf("buffer: %s\n", buf);
+	printf("Reversed by the driver: %s\n", buf);
+	close (fp);
 
 	return 0;
 }

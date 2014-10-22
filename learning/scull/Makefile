@@ -6,7 +6,7 @@ ifeq ($(ARCH),arm)
 else
 	#KDIR := /lib/modules/`uname -r`/build
 	# Linux Mint CRE1-L10487
-	KDIR := ~/linux-3.13.0
+	KDIR := ~/linux-3.13.1
 	CWD := `pwd`
 endif
 

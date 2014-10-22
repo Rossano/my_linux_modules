@@ -6,6 +6,8 @@
  */
 
 #include <linux/module.h>
+#include <linux/init.h>
+#include <linux/kernel.h>
 #include <linux/string.h>
 #include <linux/fs.h>
 #include <asm/uaccess.h>
@@ -15,8 +17,8 @@ MODULE_DESCRIPTION("Simple char device");
 MODULE_AUTHOR("ross");
 
 #define BUFFER_LEN	100
-#define MAJOR		89
-#define MINOR		0
+#define _MAJOR		89
+#define _MINOR		0
 
 static char msg[BUFFER_LEN];
 static short readPos = 0;
@@ -34,9 +36,9 @@ static struct file_operations fops = {
 		.release = dev_rls,
 };
 
-int init_module(void)
+int init_mod(void)
 {
-	int t = register_chrdev(MAJOR, "myCdev", &fops);
+	int t = register_chrdev(_MAJOR, "myCdev", &fops);
 
 	if(t < 0)
 	{
@@ -49,6 +51,11 @@ int init_module(void)
 
 	return t;
 };
+
+void cleanup_mod(void)
+{
+	unregister_chrdev(_MAJOR, "myCdev");
+}
 
 static int dev_open(struct inode *pinode, struct file *pfile)
 {
@@ -91,3 +98,6 @@ static ssize_t dev_write(struct file *pfile, const char *buf, size_t len, loff_t
 	}
 	return count;
 }
+
+module_init(init_mod);
+module_exit(cleanup_mod);
