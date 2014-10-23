@@ -10,7 +10,7 @@
 #include <assert.h>
 #include <string.h>
 
-#define BUFFER_LEN	1
+#define BUFFER_LEN	100
 
 int main(int argc, char *argv[])
 {
@@ -30,9 +30,9 @@ int main(int argc, char *argv[])
 
 	printf("Input string arg[1]: %s\n", argv[1]);
 	write(fp, argv[1], strlen(argv[1]));
-	read(fp, &buf, strlen(argv[1]));
+	read(fp, &buf, BUFFER_LEN); //strlen(argv[1]));
 	//while (read(fp, &buf[i++], 1)) ;
-	printf("buffer: %s\n", buf);
+//	printf("buffer: %s\n", buf);
 	printf("Read by the driver: %s\n", buf);
 	close (fp);
 

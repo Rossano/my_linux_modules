@@ -1,8 +1,8 @@
 # For linux mint
 KDIR := ~/linux-3.13.1
 CWD := `pwd`
-MODULE := my_memory
-_MAJOR := 89
+MODULE := my_mem#ory
+_MAJOR := 91
 _MINOR := 0
 
 obj-m += $(MODULE).o
@@ -19,9 +19,10 @@ clean:
 	rm -f test
 	
 install:
-	sudo mknod /dev/$(MODULE) c $(_MAJOR) $(_MINOR)
-	sudo chmod a+r+w /dev/$(MODULE)
-	sudo insmod $(MODULE).ko
+	sudo insmod $(MODULE).ko $*
+	major=$(awk "\$2==\"$MODULE\" {print \$1}" /proc/devices)
+	sudo mknod /dev/$(MODULE) c $major $(_MINOR)
+	sudo chmod a+r+w /dev/$(MODULE)	
 	
 load:
 	sudo insmod $(MODULE).ko
