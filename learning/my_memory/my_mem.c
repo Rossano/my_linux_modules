@@ -27,8 +27,8 @@ int mem_init(void)
 {
 	int result;
 
-	result = register_chrdev(mem_major, "my_mem", &mem_fops);
-	//result = register_chrdev(0, "my_memory", &mem_fops);
+	//result = register_chrdev(mem_major, "my_mem", &mem_fops);
+	result = register_chrdev(0, "my_mem", &mem_fops);
 
 	if(result < 0)
 	{
@@ -84,7 +84,7 @@ ssize_t mem_write(struct file *pfile, const char *buf, size_t len, loff_t *ofs)
 	}
 	if (len < LEN_BUFFER)
 	{
-		bytes_to_write = LEN_BUFFER;
+		bytes_to_write = len; //LEN_BUFFER;
 	}
 	else
 	{
