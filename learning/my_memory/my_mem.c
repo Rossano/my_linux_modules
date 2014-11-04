@@ -27,13 +27,17 @@ int mem_init(void)
 {
 	int result;
 
-	result = register_chrdev(mem_major, "my_mem", &mem_fops);
-	//result = register_chrdev(0, "my_memory", &mem_fops);
+	//result = register_chrdev(mem_major, "my_mem", &mem_fops);
+	result = register_chrdev(0, "my_memory", &mem_fops);
 
-	if(result < 0)
+	if(result <= 0)
 	{
-		printk(KERN_ALERT"Cannot obtain major\n");
+		printk(KERN_ALERT"Cannot obtain major result = %d\n", result);
 		return result;
+	}
+	else
+	{
+		mem_major = result;
 	}
 
 	mem_buf = kmalloc(LEN_BUFFER, GFP_KERNEL);

@@ -10,7 +10,7 @@
 
 #define LEN_BUFFER		5
 #define _MAJOR 			91
-#define _MINOR 			0
+#define _MINOR 			139
 
 static int mem_major = _MAJOR;
 static int mem_minor = _MINOR;
