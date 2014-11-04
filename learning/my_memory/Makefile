@@ -1,6 +1,17 @@
+ifeq (${ARCH},arm)
+#Raspberry architecture
+	KDIR := ~/projects/raspberry/linux
+	CWD := ../../../my_linux_modules/learning/my_memory
+	CCPREFIX := ~/projects/raspberry/tools/arm-bcm2708/arm-bcm2708-linux-gnueabi/bin/arm-bcm2708-linux-gnueabi-
+else	
+# x86 architecture
 # For linux mint
-KDIR := ~/linux-3.13.1
+#KDIR := ~/linux-3.13.1
+# For linux OpenSUSE
+KDIR := /usr/src/linux
 CWD := `pwd`
+endif
+
 MODULE := my_mem#ory
 _MAJOR := 91
 _MINOR := 0
@@ -8,11 +19,21 @@ _MINOR := 0
 obj-m += $(MODULE).o
 
 all:
+ifeq (${ARCH},arm)
+	make ARCH=arm CROSS_COMPILE=${CCPREFIX} -C ${KDIR} M=${CWD} modules
+	${CCPREFIX}gcc -o my_mem_test test.c
+else
 	make -C ${KDIR} M=${CWD} modules
-	gcc -o test test.c
+	gcc -o my_mem_test test.c
+endif
+	
 	
 modules:
+ifeq (${ARCH},arm)
+	make ARCH=arm CROSS_COMPILE=${CCPREFIX} -C ${KDIR} M=${CWD} modules
+else
 	make -C ${KDIR} M=${CWD} modules
+endif
 	
 clean:
 	make -C ${KDIR} M=${CWD} clean
@@ -31,4 +52,8 @@ unload:
 	sudo rmmod $(MODULE)
 	
 test:
-	gcc -o test test.c
+ifeq (${ARCH},arm)
+	${CCPREFIX}gcc -o my_mem_test test.c
+else
+	gcc -o my_mem_test test.c
+endif

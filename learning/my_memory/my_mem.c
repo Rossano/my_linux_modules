@@ -88,7 +88,7 @@ ssize_t mem_write(struct file *pfile, const char *buf, size_t len, loff_t *ofs)
 	}
 	if (len < LEN_BUFFER)
 	{
-		bytes_to_write = LEN_BUFFER;
+		bytes_to_write = len; //LEN_BUFFER;
 	}
 	else
 	{
