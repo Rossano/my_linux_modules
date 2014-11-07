@@ -6,9 +6,9 @@ ifeq (${ARCH},arm)
 else	
 # x86 architecture
 # For linux mint
-#KDIR := ~/linux-3.13.1
+KDIR := ~/linux-3.13.1
 # For linux OpenSUSE
-KDIR := /usr/src/linux
+#KDIR := /usr/src/linux
 CWD := `pwd`
 endif
 
